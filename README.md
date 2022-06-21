@@ -10,7 +10,7 @@
 **Tech stack: C# • ASP.NET • MSSQL • JSon • CSS • HTML • Bootstrap**
 
 **Start settings:
-- git clone https://github.com/K-Gulzada/GameShop.git
+- git clone https://github.com/K-Gulzada/GameOnlineShop.git
 - открыть проект на Visual Studio и запустить
 
 ## Website design
