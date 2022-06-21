@@ -30,7 +30,7 @@ namespace GameShop.Data.Models
         public void AddToCart(Game game)
         {
             InTotal += game.Price;
-            _content.DbShopCartItem.Add(new ShopCartItem // create and add entity "ShopCart Item" instance to DbShopCartItem
+            _content.DbShopCartItem.Add(new ShopCartItem 
             {
                 ShopCartId = ShopCartId,
                 Game = game

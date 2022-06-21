@@ -1,0 +1,47 @@
+﻿@using GameOnlineShop.ViewModels
+@model GameOnlineShop.ViewModels.GameViewModel
+
+<style>
+
+    .colorWhite {
+        color: white;
+    }
+
+    .margin_10_0 {
+        margin: 10px 0;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <h1>Add New Game</h1>
+            <form action="/Games/AddNewGame" method="post" enctype="multipart/form-data">
+                <div class="margin_10_0 colorWhite">
+                    Image: <input class="form-control" type="file" name="@nameof(GameViewModel.ImageFile)" />
+                </div>
+                <div class="margin_10_0 colorWhite">
+                    Name: @Html.TextBoxFor(x => x.Name, new { Class = "form-control", @required = "required" })
+                </div>
+                <div class="margin_10_0 colorWhite">
+                    Description: @Html.TextBoxFor(x => x.Desc, new { Class = "form-control" })
+                </div>
+                <div class="margin_10_0 colorWhite">
+                    Quantity: @Html.TextBoxFor(x => x.Quantity, new { Class = "form-control", @required = "required", @type="Number" })
+                </div>
+                <div class="margin_10_0 colorWhite">
+                    Price: @Html.TextBoxFor(x => x.Price, new { Class = "form-control", @required = "required", @type="Number" })
+                </div>
+
+                <div class="margin_10_0 colorWhite">
+                    <select asp-for="Category" class="form-control" asp-items="ViewBag.CategoryNames"><option selected disabled>Categories</option></select>
+                </div>
+
+                <div class="margin_10_0">
+                    <input class="btn btn-primary" type="submit" value="Add New Game" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

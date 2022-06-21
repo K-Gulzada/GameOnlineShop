@@ -1,0 +1,20 @@
+﻿@model IEnumerable<GameOnlineShop.Data.Models.User>
+
+    <style>
+        .colorWhite{
+            color:white;
+        }
+    </style>
+
+<h2>User List</h2>
+<table class="table colorWhite">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-userid="@user.Id">Права доступа</a>
+            </td>
+        </tr>
+    }
+</table>

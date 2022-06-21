@@ -1,9 +1,11 @@
-﻿using GameShop.Data.Models;
+﻿using GameOnlineShop.Data.Models;
+using GameShop.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameShop.Data
 {
-    public class AppDBContent : DbContext
+    public class AppDBContent : IdentityDbContext<User>
     {
         public AppDBContent(DbContextOptions<AppDBContent> options) : base(options) { }
 

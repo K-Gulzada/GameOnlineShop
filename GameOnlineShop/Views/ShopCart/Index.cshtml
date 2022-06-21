@@ -36,10 +36,10 @@
 </style>
 
 <div class="container offset-3">
-    <h3 class="text-light g-3">Корзина</h3>
+    <h3 class="text-light g-3">Cart</h3>
     @if (Model.shopCart.ListShopItems.Count() == 0)
     {
-        <p class="text-light">Корзина пока что пуста</p>
+        <p class="text-light">Cart is empty</p>
     }
     else
     {
@@ -70,13 +70,13 @@
 		      </td>
 
 		      <td class="align-middle"><p class="price text-light text-center">@el.Game.Name </p></td>
-		      <td class="align-middle"><p class="text-light text-center">@el.Game.Price.ToString("c", new CultureInfo("ru-RU"))</td>
-              <td align="right"><a asp-controller="ShopCart" asp-action="deleteFromCart" asp-route-id="@el.Id"><img class="table-img-delete" src="/icons/x-lg.svg" alt="Delete" width="21" height="21"></a></td>    <!--cross icon for deleting the item from ShopCart-->
+		      <td class="align-middle"><p class="text-light text-center">@el.Game.Price.ToString("c", new CultureInfo("kz-KZ"))</td>
+              <td align="right"><a asp-controller="ShopCart" asp-action="deleteFromCart" asp-route-id="@el.Id"><img class="table-img-delete" src="/icons/x-lg.svg" alt="Delete" width="21" height="21"></a></td>
 		    </tr>
         }
         		  </tbody>
 		</table>  
-        <h5 class="alert alert-dark text-dark">Итого: @Model.shopCart.InTotal.ToString("c", new CultureInfo("ru-RU"))</h5> <!--show total price-->
+        <h5 class="alert alert-dark text-dark">Итого: @Model.shopCart.InTotal.ToString("c", new CultureInfo("kz-KZ"))</h5> <!--show total price-->
         <hr />
     <a class="btn btn-success" href="/Order/Checkout">Оплатить</a>  <!--go to Checkout-->
         </div>

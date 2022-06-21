@@ -9,8 +9,8 @@ namespace GameShop.Controllers
 {
     public class ShopCartController : Controller
     {
-        private readonly IAllGames _gamesRep; 
-        private readonly ShopCart _shopCart;   
+        private readonly IAllGames _gamesRep;
+        private readonly ShopCart _shopCart;
 
         public ShopCartController(IAllGames gamesRep, ShopCart shopCart)
         {
@@ -19,27 +19,34 @@ namespace GameShop.Controllers
         }
 
         [HttpGet]
-        public ViewResult Index()   // model "ShopCart Item" instances transmission through ViewModel to View
+        public ViewResult Index()
         {
             var items = _shopCart.getShopItems();
             _shopCart.ListShopItems = items;
 
             var obj = new ShopCartViewModel { shopCart = _shopCart };
+            if (items.Count != 0)
+            {
+                foreach (var item in items)
+                {
+                    obj.shopCart.InTotal += item.Game.Price;
+                }
+            }
 
             return View(obj);
         }
 
-        public RedirectToActionResult addToCart(int id) // if model "ShopCart item" instance exists and its attribute "Is available" is true, add it to Cart
+        public RedirectToActionResult addToCart(int id)
         {
             var item = _gamesRep.Games.FirstOrDefault(i => i.Id == id);
-            if(item != null && item.IsAvailable)
+            if (item != null && item.IsAvailable)
             {
                 _shopCart.AddToCart(item);
             }
-            return RedirectToAction("Index");   // redirect to page "Index"
+            return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult deleteFromCart(int id)    // delete model "ShopCart Item" instances and redirect to page "Index"
+        public RedirectToActionResult deleteFromCart(int id)
         {
             _shopCart.DeleteFromCart(id);
             return RedirectToAction("Index");

@@ -8,44 +8,76 @@
     <link href="~/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="bg-dark">
-<header>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" aria-current="page" asp-controller="Home" asp-action="Index">GameShop</a> <!--header and navigation-->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List" >Все игры</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List/Action">Экшны и шутеры</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List/Horror">Хорроры</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List/RPG">RPG</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List/JRPG">Японские RPG</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Games/List/Quest">Квесты и визуальные новеллы</a>
-          </li>
-        </ul>
-            <div class="nav-item">
-            <a type="button" href="/ShopCart/Index" class="btn btn-dark">Корзина</a>
-          </div>
-      </div>
-    </div>
-  </nav>
-</header>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" aria-current="page" asp-controller="Home" asp-action="Index">GameStore</a> <!--header and navigation-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Games/List">All Games</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Games/List/Action">Action games and shooters</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Games/List/Horror">Horror</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Games/List/JRPG">JRPG</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Games/List/Quest">Quests and visual novels</a>
+                        </li>
+                    </ul>
+                    <div class="nav-item">
+                        <a type="button" href="/ShopCart/Index" class="btn btn-dark">Cart</a>
+                    </div>
+                    @User.Identity.Name
+                    @if (!User.Identity.IsAuthenticated)
+                    {
 
-        @RenderBody()
+                        <div class="nav-item">
+                            <a type="button" href="/Account/Login" class="btn btn-dark">Sign in</a>
+                        </div>
+                        <div class="nav-item">
+                            <a type="button" href="/Account/Register" class="btn btn-dark">Register</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link">Hello, @User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn-link" style="padding:0; border: none; background: none; text-decoration:none">
+                                    <a class="nav-link">Log out</a>
+                                </button>
+
+                            </form>
+                        </li>
+                    }
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="UserList">User List</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Games" asp-action="AddNewGame">New Game</a>
+                        </li>
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @RenderBody()
 
     <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    </body>
+</body>
 </html>

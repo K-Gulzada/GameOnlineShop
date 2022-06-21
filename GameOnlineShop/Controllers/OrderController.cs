@@ -25,21 +25,21 @@ namespace GameShop.Controllers
 
         private Order GetData(Order order)
         {
-            _cart.ListShopItems = _cart.getShopItems(); // get cart items data
-            if (_cart.ListShopItems.Count == 0)  // impossible to create order without cart items
+            _cart.ListShopItems = _cart.getShopItems();
+            if (_cart.ListShopItems.Count == 0)
             {
-                ModelState.AddModelError("", "Отсутствуют товары в корзине"); // error "Shop cart is empty"
+                ModelState.AddModelError("", "Отсутствуют товары в корзине"); 
             }
 
             if (ModelState.IsValid)
             {
-                _allOrders.createOrder(order);  // order creation
-                string message = order.ClientName + ", благодарим вас за покупку в цифровом магазине GameShop! \nВаш заказ был сформирован:";   // email message creation
+                _allOrders.createOrder(order);
+                string message = order.ClientName + ", благодарим вас за покупку в магазине GameStore! \nВаш заказ был сформирован:"; 
                 foreach (var item in order.OrderDetails)
                 {
-                    message += "\n" + item.game.Name + ": 0000-0000-0000-0000";
+                    message += "\n" + item.game.Name;
                 }
-                _orderProcess.SendEmail(order.Email, "Заказ #" + order.Id, message);  // send email message
+                _orderProcess.SendEmail(order.Email, "Заказ #" + order.Id, message);
                 valid = true;
             }
             return order;

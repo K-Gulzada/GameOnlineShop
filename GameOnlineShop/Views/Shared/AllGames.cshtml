@@ -2,40 +2,51 @@
 @model Game
 
 <style>
-
+    .myCardStyle {
+        height: 310px;
+        justify-content: space-around;
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 
-        <div class="col">
-          <div class="card bg-light shadow-sm">
-            <img src="@Model.Image" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></img>
+<div class="col">
+    <div class="card bg-light shadow-sm">
+        <img src="@Model.Image" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect></img>
 
-            <div class="card-body">
-                @if (@Model.IsAvailable)
-                {
+        <div class="card-body myCardStyle">
+            @if (@Model.IsAvailable)
+            {
+                <div>
                     <h5 style="display:inline;float:left;">@Model.Name</h5>
                     <p style="display:inline;float:right;">В наличии</p>
-                    <hr style="clear:both;"/>
-                } else
-                {
+                    <hr style="clear:both;" />
+                </div>
+            }
+            else
+            {
+                <div>
                     <h5 style="display:inline;float:left;">@Model.Name</h5>
                     <p style="display:inline;float:right;">Нет в наличии</p>
-                    <hr style="clear:both;"/>
-                }
+                    <hr style="clear:both;" />
+                </div>
+            }
             <p class="card-text">@Model.Desc</p>
-              <div class="d-flex justify-content-between align-items-center">
-                    <h6>@Model.Price.ToString("c", new CultureInfo("ru-RU"))</h6>
+            <div class="d-flex justify-content-between align-items-center">
+                <h6>@Model.Price.ToString("c", new CultureInfo("kz-KZ"))</h6>
                 @if (@Model.IsAvailable)
                 {
                     <div class="btn-group">
                         <a class="btn btn-sm btn-success" asp-controller="ShopCart" asp-action="addToCart" asp-route-id="@Model.Id">Добавить в корзину</a>
                     </div>
-                } else 
+                }
+                else
                 {
                     <div class="btn-group">
                         <a class="btn btn-sm btn-outline-secondary">Скоро он будет вашим!</a>
                     </div>
                 }
             </div>
-            </div>
-          </div>
         </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model GameOnlineShop.ViewModels.LoginViewModel
+
+<style>
+    body {     
+        background: url("/img/wf_1.jpg") no-repeat center;
+        background-size: 100%;
+        height: 950px;
+    }
+
+    .loginDivWrapper {
+        display: flex;
+        justify-content: flex-end;
+        color: white;
+        margin: 150px 150px 0 0;
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .width_300 {
+        width: 300px;
+    }
+
+      .margin_10_0 {
+        margin: 10px 0;
+    }
+
+</style>
+
+<div class="loginDivWrapper">
+    <h2>Вход в приложение</h2>
+    <form method="post" asp-controller="Account" asp-action="Login"
+          asp-route-returnUrl="@Model.ReturnUrl">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="margin_10_0">
+            <label class="width_300" asp-for="UserName"></label><br />
+            <input class="width_300" asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div class="margin_10_0">
+            <label class="width_300" asp-for="Password"></label><br />
+            <input class="width_300" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>       
+        <div class="margin_10_0">
+            <input type="submit" value="Войти" />
+        </div>
+    </form>
+</div>

@@ -5,8 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; } // description
-        public string Details { get; set; } // additional information
-        public string TechReq { get; set; } // technical requirements
+        public string Details { get; set; } // additional information     
         public string Image { get; set; }
         public bool IsAvailable { get; set; }
         public int Quantity { get; set; }

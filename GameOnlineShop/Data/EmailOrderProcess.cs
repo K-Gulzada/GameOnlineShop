@@ -11,7 +11,7 @@ namespace GameShop.Data.Repository
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("GameShop", "EMAIL")); // paste your email
+            emailMessage.From.Add(new MailboxAddress("GameShop", "sagzhaaan98@gmail.com")); // paste your email
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart("Plain") { Text = message };
@@ -19,7 +19,7 @@ namespace GameShop.Data.Repository
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("EMAIL", "PASSWORD");   // paste your email account details
+                client.Authenticate("sagzhaaan98@gmail.com", "wipvzbrzyjbdfcbf");   // paste your email account details
                 client.Send(emailMessage);
 
                 client.Disconnect(true);

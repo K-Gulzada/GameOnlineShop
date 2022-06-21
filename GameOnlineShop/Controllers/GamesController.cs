@@ -1,10 +1,15 @@
-﻿using GameShop.Data.Interfaces;
+﻿using GameOnlineShop.ViewModels;
+using GameShop.Data.Interfaces;
 using GameShop.Data.Models;
 using GameShop.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameShop.Controllers
 {
@@ -12,11 +17,14 @@ namespace GameShop.Controllers
     {
         private readonly IAllGames _allGames;
         private readonly IGamesCategory _categories;
+        private IWebHostEnvironment _webHostEnvironment;
+
         GamesListViewModel viewModel;
-        public GamesController(IAllGames allGames, IGamesCategory gamesCategory)
+        public GamesController(IAllGames allGames, IGamesCategory gamesCategory, IWebHostEnvironment webHostEnvironment)
         {
             _allGames = allGames;
             _categories = gamesCategory;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         private IEnumerable<Game> GetData(string category, int page = 1)
@@ -24,7 +32,7 @@ namespace GameShop.Controllers
             int pageSize = 9;   // max number of elements on page
 
             IEnumerable<Game> games = null;
-            string currCategory = category; 
+            string currCategory = category;
             if (string.IsNullOrEmpty(category)) // if category does not exist,
             {
                 games = _allGames.Games.OrderBy(i => i.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList(); // show all items with pagination
@@ -53,5 +61,44 @@ namespace GameShop.Controllers
             GetData(category, page);
             return View(viewModel);
         }
+
+        [HttpGet]
+        public IActionResult AddNewGame()
+        {
+            var allCategories = _categories.Categories;
+            var categoryNames = new List<string>();
+            foreach(var category in allCategories)
+            {
+                categoryNames.Add(category.CategoryName);
+            }
+
+            ViewBag.CategoryNames = new SelectList(categoryNames);
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewGame(GameViewModel gameViewModel)
+        {
+            if (gameViewModel.ImageFile != null)
+            {
+              //  var fileExtention = Path.GetExtension(gameViewModel.ImageFile.FileName);
+               // var fileName = $"{gameViewModel.Name}{fileExtention}";
+                var fileName = gameViewModel.ImageFile.FileName;
+               
+                var path_2 = Path.Combine(
+                    _webHostEnvironment.WebRootPath,
+                    "img", fileName);
+                //  fsrw = new FileStream(fname, FileMode.Open, FileAccess.ReadWrite);
+                using (var fileStream = new FileStream(path_2, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    await gameViewModel.ImageFile.CopyToAsync(fileStream);
+                }
+                gameViewModel.Image = $"/img/{fileName}";
+            }
+            _allGames.AddNew(gameViewModel);
+            return RedirectToAction("List");
+        }
+
     }
 }
